@@ -5,30 +5,35 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public float MovementSpeed;
+    Vector3 TargetPosition;
+
+    private void Start()
+    {
+        TargetPosition = transform.position;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += Vector3.back * MovementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += Vector3.right * MovementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position += Vector3.left * MovementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            transform.position += new Vector3(0f, 400f) * Time.deltaTime;
-        }
         
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            TargetPosition += Vector3.forward;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            TargetPosition += Vector3.back;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            TargetPosition += Vector3.left;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            TargetPosition += Vector3.right;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, TargetPosition, MovementSpeed * Time.deltaTime);
+
     }
 }
