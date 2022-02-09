@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform Player;
-    Vector3 TargetPosition;
+    public Vector3 DistanceFromTarget;
     public float FollowSpeed;
 
     // Start is called before the first frame update
@@ -17,12 +17,12 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 dirToPlayer = Player.position - transform.position;
+        Vector3 distToPlayer = Player.position - transform.position;
 
-        dirToPlayer += new Vector3(0f, 4f, -9f);
-        dirToPlayer.Normalize();
+        distToPlayer += DistanceFromTarget;
+        distToPlayer.Normalize();
 
-        transform.position += dirToPlayer * FollowSpeed * Time.deltaTime;
+        transform.position += distToPlayer * FollowSpeed * Time.deltaTime;
 
         
 /*
