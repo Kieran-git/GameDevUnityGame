@@ -22,13 +22,9 @@ public class CameraFollow : MonoBehaviour
         distToPlayer += DistanceFromTarget;
         distToPlayer.Normalize();
 
+        // Trying to stop camera shake
+        if (distToPlayer == DistanceFromTarget * 1.1f) return;
         transform.position += distToPlayer * FollowSpeed * Time.deltaTime;
 
-        
-/*
-        TargetPosition += transform.position - Player.position;
-
-        transform.position = Vector3.Lerp(transform.position, TargetPosition, FollowSpeed * Time.deltaTime);
-    */
     }
 }

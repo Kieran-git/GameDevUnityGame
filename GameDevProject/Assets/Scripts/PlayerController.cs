@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mover2 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float MovementSpeed;
     public float JumpForce;
@@ -16,7 +16,7 @@ public class Mover2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
         }
