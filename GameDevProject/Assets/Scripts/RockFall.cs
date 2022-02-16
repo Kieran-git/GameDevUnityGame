@@ -13,7 +13,6 @@ public class RockFall : MonoBehaviour
             gameObject.AddComponent<Shrinking>();
             Collided = true;
         }
-
     }
 
     // Start is called before the first frame update
