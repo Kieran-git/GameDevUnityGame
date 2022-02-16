@@ -6,15 +6,17 @@ public class PlayerController : MonoBehaviour
 {
     public float MovementSpeed;
     public float JumpForce;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject RockPrefab;
 
     // Update is called once per frame
     void Update()
+    {
+        PlayerMovement();
+
+        if (Input.GetKeyDown(KeyCode.I)) Instantiate(RockPrefab, transform.position + Vector3.up * 3, Quaternion.identity);
+    }
+
+    void PlayerMovement()
     {
         if (Input.GetKey(KeyCode.W))
         {
