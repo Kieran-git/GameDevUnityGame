@@ -7,6 +7,21 @@ public class PlayerController : MonoBehaviour
     public float MovementSpeed;
     public float JumpForce;
     public GameObject RockPrefab;
+    bool CanJump;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        CanJump = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        CanJump = false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -34,7 +49,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.right * MovementSpeed * Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * JumpForce);
         }

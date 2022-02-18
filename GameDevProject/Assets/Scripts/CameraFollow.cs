@@ -20,17 +20,6 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        Vector3 distToPlayer = Player.position - transform.position;
-        
-        if (Mathf.Abs(distToPlayer.magnitude - DistanceFromTarget.magnitude) < FollowStopDistance) return;
-
-        distToPlayer += DistanceFromTarget;
-        distToPlayer.Normalize();
-
-        transform.position += distToPlayer * FollowSpeed * Time.deltaTime;
-        */
-
         transform.position = Vector3.Lerp(transform.position, Player.position + DistanceFromTarget, FollowSpeed * Time.deltaTime);
     }
 }
