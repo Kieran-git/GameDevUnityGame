@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     public float MovementSpeed;
     bool CanJump;
 
-    public float SmallerSize;
     public float NormalSize;
+    public float SmallerSize;
     public float ShrinkSpeed;
     public float GrowSpeed;
     bool Shrinking;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        Shrinking = false;
         rb = GetComponent<Rigidbody>();
     }
 
