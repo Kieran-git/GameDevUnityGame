@@ -7,6 +7,16 @@ public class PhysicsMovement : MonoBehaviour
     private Rigidbody rb;
     public float JumpForce;
     public float MovementSpeed;
+    bool CanJump;
+
+    private void OnCollisionStay(Collision collision)
+    {
+        CanJump = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        CanJump = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +34,7 @@ public class PhysicsMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) v.x = +MovementSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.A)) v.x = -MovementSpeed * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space)) v += JumpForce * Vector3.up;
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump) v += JumpForce * Vector3.up;
 
         rb.velocity = v;
     }
