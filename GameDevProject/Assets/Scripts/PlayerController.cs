@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // PlayerMovement
     private Rigidbody rb;
     public float JumpForce;
     public float MovementSpeed;
     bool CanJump;
 
+    // ShrinkAndGrow
     public float NormalSize;
     public float SmallerSize;
     public float ShrinkSpeed;
     public float GrowSpeed;
     bool Shrinking;
+
+    // Audio
+    public List<AudioClip> JumpSounds;
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        // Play collide sound
+    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -47,7 +57,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) v.x = Time.deltaTime * +MovementSpeed;
         if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space) && CanJump) v += JumpForce * Vector3.up;
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump)
+        {
+            v += JumpForce * Vector3.up;
+            AudioSource.PlayClipAtPoint(JumpSounds[Random.Range(0, 3)], transform.position);
+        }
 
         rb.velocity = v;
     }

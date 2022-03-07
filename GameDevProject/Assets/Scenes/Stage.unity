@@ -2712,6 +2712,10 @@ MonoBehaviour:
   SmallerSize: 0.5
   ShrinkSpeed: 0.25
   GrowSpeed: 0.1
+  JumpSounds:
+  - {fileID: 8300000, guid: ee848cb4f29dd9a42b83162f378aed6b, type: 3}
+  - {fileID: 8300000, guid: 2998f631feaf5b34389053448776197b, type: 3}
+  - {fileID: 8300000, guid: 822c7e26241910f48aff9924c9b5a500, type: 3}
 --- !u!54 &1944081787
 Rigidbody:
   m_ObjectHideFlags: 0
