@@ -50,6 +50,16 @@ public class PlayerController : MonoBehaviour
         Jump();
 
         ShrinkAndGrow();
+
+        DevCheckPoint();
+    }
+
+    void DevCheckPoint()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            transform.position = new Vector3(20f, 16f, 14f);
+        }
     }
 
     void Jump()
