@@ -24,30 +24,14 @@ public class PlayerController : MonoBehaviour
     {
         // Play collide sound
     }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        CanJump = true;
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        CanJump = false;
-    }
     private void Start()
     {
         Shrinking = false;
         rb = GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        PlayerMovement();
-
-        ShrinkAndGrow();
-    }
-
-    void PlayerMovement()
+    
+    // Every physics update
+    private void FixedUpdate()
     {
         var v = rb.velocity;
 
@@ -56,6 +40,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) v.z = Time.deltaTime * -MovementSpeed;
         if (Input.GetKey(KeyCode.D)) v.x = Time.deltaTime * +MovementSpeed;
         if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
+
+        rb.velocity = v;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Jump();
+
+        ShrinkAndGrow();
+    }
+
+    void Jump()
+    {
+        var v = rb.velocity;
+        CanJump = Physics.Raycast(transform.position, Vector3.down, 1.5f);
 
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     // To Do: Add Movement & Jump speed scaling
     void ShrinkAndGrow()
     {
-        // Toggle Shirnk - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
+        // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
         if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= NormalSize)
         {
             Shrinking = true;

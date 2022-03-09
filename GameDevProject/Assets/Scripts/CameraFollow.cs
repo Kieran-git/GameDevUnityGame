@@ -8,8 +8,8 @@ public class CameraFollow : MonoBehaviour
     public Vector3 DistanceFromTarget;
     public float FollowSpeed;
     public float FollowStopDistance;
-
-    Transform TargetPosition;
+    public AudioSource master;
+    bool muted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,5 +21,11 @@ public class CameraFollow : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position, Player.position + DistanceFromTarget, FollowSpeed * Time.deltaTime);
+
+        // Mute song
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            master.mute = muted = !muted;
+        }
     }
 }
