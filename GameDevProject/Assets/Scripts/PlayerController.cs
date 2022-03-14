@@ -6,15 +6,23 @@ public class PlayerController : MonoBehaviour
 {
     // PlayerMovement
     private Rigidbody rb;
-    public float JumpForce;
+    float JumpForce;
     public float MovementSpeed;
     bool CanJump;
 
     // ShrinkAndGrow
+    public Vector3 NormalGravity;
+    public Vector3 IncreasedGravity;
+
+    public float NormalJump;
+    public float IncreasedJump;
+
     public float NormalSize;
     public float SmallerSize;
+
     public float ShrinkSpeed;
     public float GrowSpeed;
+
     bool Shrinking;
 
     // Audio
@@ -26,6 +34,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        JumpForce = NormalJump;
         Shrinking = false;
         rb = GetComponent<Rigidbody>();
     }
@@ -79,6 +88,18 @@ public class PlayerController : MonoBehaviour
     // To Do: Add Movement & Jump speed scaling
     void ShrinkAndGrow()
     {
+        // Altered values from two player forms
+        if (transform.localScale.x >= NormalSize)
+        {
+            JumpForce = NormalJump;
+            Physics.gravity = NormalGravity;
+        }
+        if (transform.localScale.x < NormalSize)
+        {
+            JumpForce = IncreasedJump;
+            Physics.gravity = IncreasedGravity;
+        }
+
         // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
         if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= NormalSize)
         {
