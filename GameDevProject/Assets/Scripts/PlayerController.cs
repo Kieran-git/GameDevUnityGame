@@ -60,12 +60,11 @@ public class PlayerController : MonoBehaviour
 
         ShrinkAndGrow();
 
-        DevCheckPoint();
+        CheckPoints();
     }
-
-    void DevCheckPoint()
+    void CheckPoints()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && GameState.Checkpoints)
         {
             transform.position = new Vector3(20f, 16f, 14f);
         }
@@ -100,6 +99,10 @@ public class PlayerController : MonoBehaviour
             Physics.gravity = IncreasedGravity;
         }
 
+        /*// Take minimum and divide by range to get to a 0 to 1 scale
+            JumpForce = transform.localScale.x - NormalJump / (NormalJump - IncreasedJump);
+            Physics.gravity = new Vector3(0f, transform.localScale.x - NormalGravity.y / (NormalGravity.y - IncreasedGravity.y), 0f);
+        */
         // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
         if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= NormalSize)
         {
@@ -116,7 +119,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale -= Vector3.one * ShrinkSpeed * Time.deltaTime;
         }
-
         // Growing - while player isn't normal size increase until they are, shrinking must be false
         if (!Shrinking && transform.localScale.x <= NormalSize)
         {
