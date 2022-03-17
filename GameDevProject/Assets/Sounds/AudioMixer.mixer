@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mixer
+  m_Name: AudioMixer
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -27,10 +27,10 @@ AudioMixerGroupController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 46aa3508cc0bdd84d801f86b89e1fc15
+  m_GroupID: 87ed0265dbce3124db4b25501ca2929e
   m_Children: []
-  m_Volume: 12535ecd60782ff46a8259c421eb5771
-  m_Pitch: 7051ef115c1f9e148b4013ad82bf0d05
+  m_Volume: 19976eea5eda65a46a98e67e7d91f1ae
+  m_Pitch: 0fe25e48837b4a4408b78bdb6f9254b2
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
@@ -45,9 +45,9 @@ AudioMixerEffectController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: 49f06cd97943dcc40a44e1af154738da
+  m_EffectID: a7b7bb3b9e594a14cb6d4f4e2f4116d4
   m_EffectName: Attenuation
-  m_MixLevel: 4e1c26ca8214db64084639c0dee195d8
+  m_MixLevel: 7b3718fea3cae1a4ca40e2f26218a713
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -60,8 +60,8 @@ AudioMixerSnapshotController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
-  m_SnapshotID: b9437de13a3ba4e4aa4735c9fb2d500e
+  m_SnapshotID: 881287f25285a264a9b292dc858533f9
   m_FloatValues:
-    7051ef115c1f9e148b4013ad82bf0d05: 2
-    12535ecd60782ff46a8259c421eb5771: -30
+    0fe25e48837b4a4408b78bdb6f9254b2: 1
+    19976eea5eda65a46a98e67e7d91f1ae: -25
   m_TransitionOverrides: {}
