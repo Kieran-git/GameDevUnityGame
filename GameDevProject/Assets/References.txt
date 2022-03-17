@@ -1,0 +1,6 @@
+References
+
+Music: https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop
+Jump: https://opengameart.org/content/8-bit-jump-1
+Rocks/Trees/Mats/etc: https://assetstore.unity.com/packages/3d/vegetation/lowpoly-trees-and-rocks-88376
+Font: https://fonts.google.com/specimen/Orbitron
