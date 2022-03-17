@@ -69,9 +69,17 @@ public class PlayerController : MonoBehaviour
     }
     void CheckPoints()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && GameState.Checkpoints)
+        // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
+
+        // Key1 - cp1
+        if (Input.GetKeyDown(KeyCode.Alpha1) && GameStateManager.Checkpoints)
         {
             transform.position = new Vector3(20f, 16f, 14f);
+        }
+        // Key2 - cp2
+        if (Input.GetKeyDown(KeyCode.Alpha2) && GameStateManager.Checkpoints)
+        {
+            transform.position = new Vector3(-5f, 22f, 0.5f);
         }
     }
 

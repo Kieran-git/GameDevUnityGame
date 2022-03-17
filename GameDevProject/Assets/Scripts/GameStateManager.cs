@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameState : MonoBehaviour 
+public class GameStateManager : MonoBehaviour 
 {
     public static bool Checkpoints;
 

@@ -681,7 +681,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 587948653}
-        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
+        m_TargetAssemblyTypeName: GameStateManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 1
         m_Arguments:
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 587948654}
   - component: {fileID: 587948653}
   m_Layer: 0
-  m_Name: GameState
+  m_Name: GameStateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
