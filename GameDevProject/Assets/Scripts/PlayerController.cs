@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        // Check if audio listener component is present if not change to main menu where its initalised
+        if(FindObjectOfType<AudioListener>() == null) SceneManager.LoadScene("Main Menu");
+
         JumpForce = MinJump;
         Shrinking = false;
         rb = GetComponent<Rigidbody>();

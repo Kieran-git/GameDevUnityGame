@@ -9,4 +9,13 @@ public class GameState : MonoBehaviour
     {
         Checkpoints = !Checkpoints;
     }
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("Stage");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
