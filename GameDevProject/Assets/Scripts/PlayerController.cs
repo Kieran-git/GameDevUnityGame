@@ -11,14 +11,15 @@ public class PlayerController : MonoBehaviour
     bool CanJump;
 
     // ShrinkAndGrow
-    public Vector3 NormalGravity;
-    public Vector3 IncreasedGravity;
 
-    public float NormalJump;
-    public float IncreasedJump;
+    public float MinJump;
+    public float MaxJump;
 
-    public float NormalSize;
-    public float SmallerSize;
+    public float MinSize;
+    public float MaxSize;
+
+    public float MinGravity;
+    public float MaxGravity;
 
     public float ShrinkSpeed;
     public float GrowSpeed;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        JumpForce = NormalJump;
+        JumpForce = MinJump;
         Shrinking = false;
         rb = GetComponent<Rigidbody>();
     }
@@ -84,43 +85,42 @@ public class PlayerController : MonoBehaviour
         rb.velocity = v;
     }
 
-    // To Do: Add Movement & Jump speed scaling
     void ShrinkAndGrow()
     {
+        // Take minimum and divide by range to get to a 0 to 1 scale
+        float jumpScale = (MinJump - MinJump) / (MaxJump - MinJump);
+        float gravityScale = (MinGravity - MinGravity) / (MaxGravity - MinGravity);
+
         // Altered values from two player forms
-        if (transform.localScale.x >= NormalSize)
+        if (transform.localScale.x >= MaxSize)
         {
-            JumpForce = NormalJump;
-            Physics.gravity = NormalGravity;
+            JumpForce = MinJump;
+            Physics.gravity = new Vector3(0f, MaxGravity, 0f);
         }
-        if (transform.localScale.x < NormalSize)
+        if (transform.localScale.x < MaxSize)
         {
-            JumpForce = IncreasedJump;
-            Physics.gravity = IncreasedGravity;
+            JumpForce = MaxJump;
+            Physics.gravity = new Vector3(0f, MinGravity, 0f);
         }
 
-        /*// Take minimum and divide by range to get to a 0 to 1 scale
-            JumpForce = transform.localScale.x - NormalJump / (NormalJump - IncreasedJump);
-            Physics.gravity = new Vector3(0f, transform.localScale.x - NormalGravity.y / (NormalGravity.y - IncreasedGravity.y), 0f);
-        */
         // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
-        if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= NormalSize)
+        if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= MaxSize)
         {
             Shrinking = true;
         }
         // Toggle Grow - If smaller size has been reached toggle growing. 
-        if (transform.localScale.x <= SmallerSize)
+        if (transform.localScale.x <= MinSize)
         {
             Shrinking = false;
         }
 
         // Shrinking - while player isn't smaller size decrease until they are, shrinking must be true
-        if (Shrinking && transform.localScale.x > SmallerSize)
+        if (Shrinking && transform.localScale.x > MinSize)
         {
             transform.localScale -= Vector3.one * ShrinkSpeed * Time.deltaTime;
         }
         // Growing - while player isn't normal size increase until they are, shrinking must be false
-        if (!Shrinking && transform.localScale.x <= NormalSize)
+        if (!Shrinking && transform.localScale.x <= MaxSize)
         {
             transform.localScale += Vector3.one * GrowSpeed * Time.deltaTime;
         }

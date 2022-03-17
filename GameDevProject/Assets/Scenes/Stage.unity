@@ -2198,12 +2198,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 150
-  NormalGravity: {x: 0, y: -12.5, z: 0}
-  IncreasedGravity: {x: 0, y: -8, z: 0}
-  NormalJump: 6
-  IncreasedJump: 10
-  NormalSize: 1
-  SmallerSize: 0.5
+  MinJump: 6
+  MaxJump: 10
+  MaxSize: 1
+  MinSize: 0.5
+  MaxGravity: -12.5
+  MinGravity: -8
   ShrinkSpeed: 0.25
   GrowSpeed: 0.05
   JumpSounds:
