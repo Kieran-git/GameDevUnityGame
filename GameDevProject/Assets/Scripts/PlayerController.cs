@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     bool CanJump;
 
     // ShrinkAndGrow
-
     public float MinJump;
     public float MaxJump;
 
@@ -30,14 +29,23 @@ public class PlayerController : MonoBehaviour
     // Audio
     public List<AudioClip> JumpSounds;
 
+    // Animation
+    Animator animator;
+    int isRunningHash;
+
     public void OnCollisionEnter(Collision collision)
     {
         // Play collide sound
     }
     private void Start()
     {
+        // Animation
+        animator = GetComponent<Animator>();
+        // Performance thing
+        isRunningHash = Animator.StringToHash("isRunning");
+
         // Check if audio listener component is present if not change to main menu where its initalised
-        if(FindObjectOfType<AudioListener>() == null) SceneManager.LoadScene("Main Menu");
+        if (FindObjectOfType<AudioListener>() == null) SceneManager.LoadScene("Main Menu");
 
         JumpForce = MinJump;
         Shrinking = false;
@@ -49,24 +57,49 @@ public class PlayerController : MonoBehaviour
     {
         var v = rb.velocity;
 
-        // Not frame independant??
         if (Input.GetKey(KeyCode.W)) v.z = Time.deltaTime * +MovementSpeed;
         if (Input.GetKey(KeyCode.S)) v.z = Time.deltaTime * -MovementSpeed;
         if (Input.GetKey(KeyCode.D)) v.x = Time.deltaTime * +MovementSpeed;
         if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
 
         rb.velocity = v;
+
+        // Don't try and look if the velocity is an insignificant amount
+        if (rb.velocity.magnitude > .01)
+        {
+            // https://forum.unity.com/threads/face-forward-based-on-rigid-body-velocity.82493/s
+            //transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+            transform.LookAt(transform.position + rb.velocity);
+        }
     }
 
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
+        HandleAnimation();
+
         Jump();
 
         ShrinkAndGrow();
 
         CheckPoints();
     }
+
+    void HandleAnimation()
+    {
+        bool isRunning = animator.GetBool(isRunningHash);
+        bool movePressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+
+        if (!isRunning && movePressed)
+        {
+            animator.SetBool(isRunningHash, true);
+        }
+        if (isRunning && !movePressed)
+        {
+            animator.SetBool(isRunningHash, false);
+        }
+    }
+
     void CheckPoints()
     {
         // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
@@ -86,7 +119,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         var v = rb.velocity;
-        CanJump = Physics.Raycast(transform.position, Vector3.down, 1.5f);
+        CanJump = Physics.Raycast(transform.position, Vector3.down, 1f);
 
         if (Input.GetKeyDown(KeyCode.Space) && CanJump)
         {
