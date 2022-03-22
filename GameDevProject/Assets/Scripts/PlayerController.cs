@@ -63,6 +63,26 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
 
         rb.velocity = v;
+    }
+
+    //https://www.youtube.com/watch?v=bXNFxQpp2qk&list=PLwyUzJb_FNeTQwyGujWRLqnfKpV-cj-eO&index=11
+    //21 min
+    void HandleRotation()
+    {
+        /*float rotationFactorPerFrame = 10f;
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = rb.velocity.x;
+        positionToLookAt.y = 0f;
+        positionToLookAt.z = rb.velocity.z;
+        
+        Quaternion currentRotation = transform.rotation;
+
+        if (movePressed)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+        }*/
 
         // Don't try and look if the velocity is an insignificant amount
         if (rb.velocity.magnitude > .01)
@@ -73,9 +93,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-        // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
+        HandleRotation();
+
         HandleAnimation();
 
         Jump();
