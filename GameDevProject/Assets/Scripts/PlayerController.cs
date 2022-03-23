@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         // Animation
         animator = GetComponent<Animator>();
+
         // Performance thing
         isRunningHash = Animator.StringToHash("isRunning");
 
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         Shrinking = false;
         rb = GetComponent<Rigidbody>();
     }
-    
+
     // Every physics update
     private void FixedUpdate()
     {
@@ -63,34 +64,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
 
         rb.velocity = v;
-    }
-
-    //https://www.youtube.com/watch?v=bXNFxQpp2qk&list=PLwyUzJb_FNeTQwyGujWRLqnfKpV-cj-eO&index=11
-    //21 min
-    void HandleRotation()
-    {
-        /*float rotationFactorPerFrame = 10f;
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = rb.velocity.x;
-        positionToLookAt.y = 0f;
-        positionToLookAt.z = rb.velocity.z;
-        
-        Quaternion currentRotation = transform.rotation;
-
-        if (movePressed)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-        }*/
-
-        // Don't try and look if the velocity is an insignificant amount
-        if (rb.velocity.magnitude > .01)
-        {
-            // https://forum.unity.com/threads/face-forward-based-on-rigid-body-velocity.82493/s
-            //transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
-            transform.LookAt(transform.position + rb.velocity);
-        }
     }
 
     // Update is called once per frame
@@ -107,9 +80,23 @@ public class PlayerController : MonoBehaviour
         CheckPoints();
     }
 
+    void HandleRotation()
+    {
+        // Don't try and look if the velocity is an insignificant amount
+        if (rb.velocity.magnitude > .01)
+        {
+            // https://forum.unity.com/threads/face-forward-based-on-rigid-body-velocity.82493/s
+            //transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+            Vector3 temp = rb.velocity;
+            temp.y = 0f;
+            transform.LookAt(transform.position + temp);
+        }
+    }
+
     void HandleAnimation()
     {
         bool isRunning = animator.GetBool(isRunningHash);
+
         bool movePressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
 
         if (!isRunning && movePressed)
@@ -121,7 +108,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool(isRunningHash, false);
         }
     }
-
     void CheckPoints()
     {
         // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
@@ -154,21 +140,15 @@ public class PlayerController : MonoBehaviour
 
     void ShrinkAndGrow()
     {
-        // Take minimum and divide by range to get to a 0 to 1 scale
-        float jumpScale = (MinJump - MinJump) / (MaxJump - MinJump);
-        float gravityScale = (MinGravity - MinGravity) / (MaxGravity - MinGravity);
+        float currentScale = transform.localScale.x - 1;
+        
+        float jumpScale = Mathf.Lerp(MaxJump, MinJump, currentScale);
+        float gravityScale = Mathf.Lerp(MinGravity, MaxGravity, currentScale);
 
-        // Altered values from two player forms
-        if (transform.localScale.x >= MaxSize)
-        {
-            JumpForce = MinJump;
-            Physics.gravity = new Vector3(0f, MaxGravity, 0f);
-        }
-        if (transform.localScale.x < MaxSize)
-        {
-            JumpForce = MaxJump;
-            Physics.gravity = new Vector3(0f, MinGravity, 0f);
-        }
+        JumpForce = jumpScale;
+        Physics.gravity = new Vector3(0f, gravityScale, 0f);
+        Debug.Log("JumpScale: " + jumpScale);
+        Debug.Log("GravityScale: " + gravityScale);
 
         // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
         if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= MaxSize)

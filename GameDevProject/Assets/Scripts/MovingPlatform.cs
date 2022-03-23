@@ -29,11 +29,11 @@ public class MovingPlatform : MonoBehaviour
         // Add PlatformSpeed to the z axis every frame until the target position is reached then switch to the other
         if (DistanceDifference.z < 5 && Forward)
         {
-            transform.position += Vector3.forward * PlatformSpeed;
+            transform.position += Vector3.forward * PlatformSpeed * Time.deltaTime;
         }
         if(DistanceDifference.z > -5 && !Forward)
         {
-            transform.position += Vector3.back * PlatformSpeed;
+            transform.position += Vector3.back * PlatformSpeed * Time.deltaTime;
         }
     }
 }
