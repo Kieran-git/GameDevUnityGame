@@ -207,8 +207,8 @@ GameObject:
   m_Component:
   - component: {fileID: 197307964}
   - component: {fileID: 197307963}
-  - component: {fileID: 197307962}
   - component: {fileID: 197307965}
+  - component: {fileID: 197307962}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -245,9 +245,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

@@ -147,8 +147,8 @@ public class PlayerController : MonoBehaviour
 
         JumpForce = jumpScale;
         Physics.gravity = new Vector3(0f, gravityScale, 0f);
-        Debug.Log("JumpScale: " + jumpScale);
-        Debug.Log("GravityScale: " + gravityScale);
+        //Debug.Log("JumpScale: " + jumpScale);
+        //Debug.Log("GravityScale: " + gravityScale);
 
         // Toggle Shrink - If not already shrinking and Q is pressed and at the normal size then toggle shrinking
         if (!Shrinking && Input.GetKeyDown(KeyCode.Q) && transform.localScale.x >= MaxSize)
