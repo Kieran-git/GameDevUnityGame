@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameStateManager : MonoBehaviour 
 {
     public static bool Checkpoints;
+    public static bool GameCompleted;
 
     public void ToggleCheckpoints()
     {

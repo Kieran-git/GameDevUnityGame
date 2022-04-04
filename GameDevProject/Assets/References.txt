@@ -4,3 +4,4 @@ Music: https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless
 Jump: https://opengameart.org/content/8-bit-jump-1
 Rocks/Trees/Mats/etc: https://assetstore.unity.com/packages/3d/vegetation/lowpoly-trees-and-rocks-88376
 Font: https://fonts.google.com/specimen/Orbitron
+Icon: https://www.flaticon.com/premium-icon/people_6098680?term=person&page=1&position=33&page=1&position=33&related_id=6098680&origin=search

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,19 +13,19 @@ public class PlayerController : MonoBehaviour
     bool CanJump;
 
     // ShrinkAndGrow
-    public float MinJump;
-    public float MaxJump;
+    public float MinJump, MaxJump;
 
-    public float MinSize;
-    public float MaxSize;
+    public float MinSize, MaxSize;
 
-    public float MinGravity;
-    public float MaxGravity;
+    public float MinGravity, MaxGravity;
 
-    public float ShrinkSpeed;
-    public float GrowSpeed;
+    public float ShrinkSpeed, GrowSpeed;
+
+    public float MinImg, MaxImg;
 
     bool Shrinking;
+
+    public RawImage PlayerSizeImg;
 
     // Audio
     public List<AudioClip> JumpSounds;
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        GameStateManager.GameCompleted = false;
+
         // Animation
         animator = GetComponent<Animator>();
 
@@ -144,6 +147,10 @@ public class PlayerController : MonoBehaviour
         
         float jumpScale = Mathf.Lerp(MaxJump, MinJump, currentScale);
         float gravityScale = Mathf.Lerp(MinGravity, MaxGravity, currentScale);
+        float ImageSize = Mathf.Lerp(MinImg, MaxImg, currentScale);
+
+        // https://forum.unity.com/threads/how-to-change-the-size-of-a-ui-image-from-code-trying-to-make-a-simple-healthbar-from-this.265024/
+        PlayerSizeImg.rectTransform.sizeDelta = new Vector2(ImageSize, ImageSize);
 
         JumpForce = jumpScale;
         Physics.gravity = new Vector3(0f, gravityScale, 0f);
