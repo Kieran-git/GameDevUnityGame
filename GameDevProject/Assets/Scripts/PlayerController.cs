@@ -199,6 +199,7 @@ public class PlayerController : MonoBehaviour
         }
         if (GameStateManager.GamePaused) Paused.gameObject.SetActive(true);
         else Paused.gameObject.SetActive(false);
-        
+
+        if(GameStateManager.GamePaused && Input.GetKeyDown(KeyCode.Return)) Application.Quit();
     }
 }
