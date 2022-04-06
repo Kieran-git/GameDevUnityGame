@@ -7,6 +7,9 @@ public class TimerController : MonoBehaviour
 {
     public Text TimerText;
     float startTime;
+    float pausedTime;
+    float timePausedElapsed;
+    int count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +22,19 @@ public class TimerController : MonoBehaviour
     {
         if (GameStateManager.GameCompleted == false)
         {
-            float timeElapsed = Time.time - startTime;
+            if(GameStateManager.GamePaused == true)
+            {
+                if (count == 0) {
+                    pausedTime = Time.time;
+                    count++;
+                }
+                timePausedElapsed = Time.time - pausedTime;
+            }
+            if (GameStateManager.GamePaused == false) count = 0;
 
+
+            float timeElapsed = Time.time - startTime - timePausedElapsed;
+            
             // Casting to int to get rid of some decimals
             string minutes = ((int)timeElapsed / 60).ToString();
             // To get only 2dp

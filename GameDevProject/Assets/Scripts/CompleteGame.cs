@@ -50,15 +50,20 @@ public class CompleteGame : MonoBehaviour
         leaderboard += NameInput.text + " - " + Timer.text + "\n";
         PlayerPrefs.SetString("Leaderboard", leaderboard);
 
-        // In order to stop 2 audio listeners being in the scene at once
-        Destroy(GameStateManager.ListenerObject);
-
-        SceneManager.LoadScene("Main Menu");
+        ReturnToMenu();
     }
 
     // When the user enters the finish line game object
     private void OnCollisionEnter(Collision collision)
     {
         GameStateManager.GameCompleted = true;
+    }
+
+    public void ReturnToMenu()
+    {
+        // In order to stop 2 audio listeners being in the scene at once
+        Destroy(GameStateManager.ListenerObject);
+
+        SceneManager.LoadScene("Main Menu");
     }
 }

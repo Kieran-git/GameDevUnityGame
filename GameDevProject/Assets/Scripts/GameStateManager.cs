@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     public static bool Checkpoints;
     public static bool GameCompleted;
+    public static bool GamePaused;
     public Text LeaderboardContents;
     public static GameObject ListenerObject;
 

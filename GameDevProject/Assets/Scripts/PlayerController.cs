@@ -24,8 +24,11 @@ public class PlayerController : MonoBehaviour
     public float MinImg, MaxImg;
 
     bool Shrinking;
-
+    
+    // UI
     public RawImage PlayerSizeImg;
+    
+    public Text Paused;
 
     // Audio
     public List<AudioClip> JumpSounds;
@@ -41,6 +44,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         GameStateManager.GameCompleted = false;
+        GameStateManager.GamePaused = false;
+
+        Paused.gameObject.SetActive(false);
 
         // Animation
         animator = GetComponent<Animator>();
@@ -53,10 +59,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Every physics update
-    private void FixedUpdate()
+    // Every physics update handle physics movement
+    void FixedUpdate()
     {
-        if (!GameStateManager.GameCompleted)
+        if (!GameStateManager.GameCompleted && !GameStateManager.GamePaused)
         {
             var v = rb.velocity;
 
@@ -72,7 +78,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameStateManager.GameCompleted)
+        if (!GameStateManager.GameCompleted && !GameStateManager.GamePaused)
         {
             HandleRotation();
 
@@ -83,6 +89,7 @@ public class PlayerController : MonoBehaviour
             ShrinkAndGrow();
         }
 
+        if(!GameStateManager.GameCompleted) PauseGame();
         if(GameStateManager.Checkpoints) CheckPoints();
     }
 
@@ -114,21 +121,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool(isRunningHash, false);
         }
     }
-    void CheckPoints()
-    {
-        // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
-
-        // Key1 - cp1
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            transform.position = new Vector3(20f, 16f, 14f);
-        }
-        // Key2 - cp2
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            transform.position = new Vector3(-5f, 22f, 0.5f);
-        }
-    }
 
     void Jump()
     {
@@ -147,7 +139,7 @@ public class PlayerController : MonoBehaviour
     void ShrinkAndGrow()
     {
         float currentScale = transform.localScale.x - 1;
-        
+
         float jumpScale = Mathf.Lerp(MaxJump, MinJump, currentScale);
         float gravityScale = Mathf.Lerp(MinGravity, MaxGravity, currentScale);
         float ImageSize = Mathf.Lerp(MinImg, MaxImg, currentScale);
@@ -181,5 +173,32 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale += Vector3.one * GrowSpeed * Time.deltaTime;
         }
+    }
+
+    void CheckPoints()
+    {
+        // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
+
+        // Key1 - cp1
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            transform.position = new Vector3(20f, 16f, 14f);
+        }
+        // Key2 - cp2
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            transform.position = new Vector3(-5f, 22f, 0.5f);
+        }
+    }
+
+    void PauseGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameStateManager.GamePaused = !GameStateManager.GamePaused;
+        }
+        if (GameStateManager.GamePaused) Paused.gameObject.SetActive(true);
+        else Paused.gameObject.SetActive(false);
+        
     }
 }
