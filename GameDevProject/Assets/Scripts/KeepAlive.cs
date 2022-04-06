@@ -7,6 +7,6 @@ public class KeepAlive : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        GameStateManager.ListenerObject = gameObject;
     }
-
 }

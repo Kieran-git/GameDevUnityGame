@@ -48,9 +48,6 @@ public class PlayerController : MonoBehaviour
         // Performance thing
         isRunningHash = Animator.StringToHash("isRunning");
 
-        // Check if audio listener component is present if not change to main menu where its initalised
-        if (FindObjectOfType<AudioListener>() == null) SceneManager.LoadScene("Main Menu");
-
         JumpForce = MinJump;
         Shrinking = false;
         rb = GetComponent<Rigidbody>();
@@ -59,28 +56,34 @@ public class PlayerController : MonoBehaviour
     // Every physics update
     private void FixedUpdate()
     {
-        var v = rb.velocity;
+        if (!GameStateManager.GameCompleted)
+        {
+            var v = rb.velocity;
 
-        if (Input.GetKey(KeyCode.W)) v.z = Time.deltaTime * +MovementSpeed;
-        if (Input.GetKey(KeyCode.S)) v.z = Time.deltaTime * -MovementSpeed;
-        if (Input.GetKey(KeyCode.D)) v.x = Time.deltaTime * +MovementSpeed;
-        if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
+            if (Input.GetKey(KeyCode.W)) v.z = Time.deltaTime * +MovementSpeed;
+            if (Input.GetKey(KeyCode.S)) v.z = Time.deltaTime * -MovementSpeed;
+            if (Input.GetKey(KeyCode.D)) v.x = Time.deltaTime * +MovementSpeed;
+            if (Input.GetKey(KeyCode.A)) v.x = Time.deltaTime * -MovementSpeed;
 
-        rb.velocity = v;
+            rb.velocity = v;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleRotation();
+        if (!GameStateManager.GameCompleted)
+        {
+            HandleRotation();
 
-        HandleAnimation();
+            HandleAnimation();
+        
+            Jump();
+        
+            ShrinkAndGrow();
+        }
 
-        Jump();
-
-        ShrinkAndGrow();
-
-        CheckPoints();
+        if(GameStateManager.Checkpoints) CheckPoints();
     }
 
     void HandleRotation()
@@ -116,12 +119,12 @@ public class PlayerController : MonoBehaviour
         // Currently dev checkpoints so can be acessed at any time ( in future set to also check if the area has been reached before allowing use)
 
         // Key1 - cp1
-        if (Input.GetKeyDown(KeyCode.Alpha1) && GameStateManager.Checkpoints)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             transform.position = new Vector3(20f, 16f, 14f);
         }
         // Key2 - cp2
-        if (Input.GetKeyDown(KeyCode.Alpha2) && GameStateManager.Checkpoints)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             transform.position = new Vector3(-5f, 22f, 0.5f);
         }
